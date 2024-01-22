@@ -1,2 +1,2 @@
-# javascript-template
-A webpack template to use on new projects
+# Weather App
+A weather app to display the weather of your city!
