@@ -24,7 +24,7 @@ headerContainer.appendChild(titleElement);
 container.appendChild(headerContainer);
 
 // Display container
-const displayContainer = document.querySelector('div');
+const displayContainer = document.createElement('div');
 displayContainer.classList.add('display');
 
 container.appendChild(displayContainer);

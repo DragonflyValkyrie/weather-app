@@ -116,17 +116,47 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _modules_helloWorld__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/helloWorld */ \"./src/modules/helloWorld.js\");\n\n\n\n(0,_modules_helloWorld__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\n\n\n//# sourceURL=webpack://javascript-template/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _modules_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/api */ \"./src/modules/api.js\");\n/* harmony import */ var _modules_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/layout */ \"./src/modules/layout.js\");\n/* harmony import */ var _modules_display__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/display */ \"./src/modules/display.js\");\n\n\n\n\n\n(0,_modules_display__WEBPACK_IMPORTED_MODULE_3__[\"default\"])();\n(0,_modules_api__WEBPACK_IMPORTED_MODULE_1__[\"default\"])('calgary');\n\n\n//# sourceURL=webpack://javascript-template/./src/index.js?");
 
 /***/ }),
 
-/***/ "./src/modules/helloWorld.js":
-/*!***********************************!*\
-  !*** ./src/modules/helloWorld.js ***!
-  \***********************************/
+/***/ "./src/modules/api.js":
+/*!****************************!*\
+  !*** ./src/modules/api.js ***!
+  \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nfunction helloWorld() {\n    console.log('Hello, World!');\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (helloWorld);\n\n\n//# sourceURL=webpack://javascript-template/./src/modules/helloWorld.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _display__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display */ \"./src/modules/display.js\");\n\n\nasync function getWeatherData(location) {\n    // Current weather data\n    const currentResponse = await fetch(\n        `http://api.weatherapi.com/v1/current.json?key=f01a3f590edd4b47b4b185016242201&q=${location}&aqi=no`,\n        { mode: 'cors' }\n    );\n    const currentWeatherData = await currentResponse.json();\n\n    // Forecast weather data\n    const forecastResponse = await fetch(\n        `http://api.weatherapi.com/v1/forecast.json?key=f01a3f590edd4b47b4b185016242201&q=${location}&days=3&aqi=no`,\n        { mode: 'cors' }\n    );\n    const forecastWeatherData = await forecastResponse.json();\n\n    // Display current weather data\n    _display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].makeWeatherCards();\n\n    _display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].location(\n        currentWeatherData.location.country,\n        currentWeatherData.location.name\n    );\n    _display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].condition(\n        currentWeatherData.icon,\n        currentWeatherData.text\n    );\n    _display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].temperature(\n        currentWeatherData.temp_c,\n        currentWeatherData.temp_f\n    );\n    _display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].windspeed(\n        currentWeatherData.wind_mph,\n        currentWeatherData.wind_kph\n    );\n    _display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].winddir(currentWeatherData.wind_dir);\n    _display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].humidity(currentWeatherData.humidity);\n\n    // Display forecast weather data\n    for (let i = 0; i < 3; i += 1) {\n        const forecastDay = forecastWeatherData.forecast.forecastday[i];\n\n        _display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].displayForecast(\n            forecastDay.date,\n            forecastDay.day.condition.icon,\n            forecastDay.day.avgtemp_c,\n            forecastDay.day.avgtemp_f\n        );\n    }\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getWeatherData);\n\n\n//# sourceURL=webpack://javascript-template/./src/modules/api.js?");
+
+/***/ }),
+
+/***/ "./src/modules/display.js":
+/*!********************************!*\
+  !*** ./src/modules/display.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ \"./src/modules/api.js\");\n\n\nconst loadDisplay = () => {\n    const displayContainer = document.querySelector('.display');\n    const form = document.querySelector('form');\n\n    form.addEventListener('submit', (event) => {\n        event.preventDefault();\n\n        const searchQueryInput = document.getElementById('input');\n        const searchQuery = searchQueryInput.value;\n\n        (0,_api__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(searchQuery);\n\n        console.log('Form submitted with value:', searchQuery);\n        searchQueryInput.value = '';\n    });\n\n    const weatherCards = document.createElement('div');\n    weatherCards.classList.add('weather-cards');\n\n    const currentWeatherCard = document.createElement('div');\n    currentWeatherCard.classList.add('current-weather-card');\n\n    const forecastWeatherCards = document.createElement('div');\n    forecastWeatherCards.classList.add('forecast-container');\n\n    weatherCards.appendChild(currentWeatherCard);\n    weatherCards.appendChild(forecastWeatherCards);\n\n    displayContainer.appendChild(weatherCards);\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({ loadDisplay });\n\n\n//# sourceURL=webpack://javascript-template/./src/modules/display.js?");
+
+/***/ }),
+
+/***/ "./src/modules/layout.js":
+/*!*******************************!*\
+  !*** ./src/modules/layout.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _assets_images_logo_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/images/logo.svg */ \"./src/assets/images/logo.svg\");\n\n\nconst container = document.querySelector('.container');\n\n// Header contaienr\nconst headerContainer = document.createElement('div');\nheaderContainer.classList.add('header-container');\n\n// Logo\nconst logoImage = document.createElement('img');\nlogoImage.classList.add('logo');\nlogoImage.src = _assets_images_logo_svg__WEBPACK_IMPORTED_MODULE_0__;\nlogoImage.alt = 'Weather Logo';\nlogoImage.style.width = '30px';\nlogoImage.style.height = 'auto';\n\n// Header Title\nconst titleElement = document.createElement('h1');\ntitleElement.textContent = 'Weather App';\n\nheaderContainer.appendChild(logoImage);\nheaderContainer.appendChild(titleElement);\n\ncontainer.appendChild(headerContainer);\n\n// Display container\nconst displayContainer = document.createElement('div');\ndisplayContainer.classList.add('display');\n\ncontainer.appendChild(displayContainer);\n\n// Form container\nconst form = document.createElement('form');\ndisplayContainer.appendChild(form);\n\n// Input to form\nconst input = document.createElement('input');\ninput.type = 'text';\ninput.id = 'search-bar';\ninput.placeholder = 'Enter your City';\nform.appendChild(input);\n\n// Search Button\nconst button = document.createElement('button');\nbutton.type = 'submit';\nbutton.textContent = 'Search';\nform.appendChild(button);\n\n// Footer container\nconst footerContainer = document.createElement('div');\nfooterContainer.classList.add('footer');\nfooterContainer.textContent = \"DragonflyValkyrie's Weather App 2024\";\n\ncontainer.appendChild(footerContainer);\n\n\n//# sourceURL=webpack://javascript-template/./src/modules/layout.js?");
+
+/***/ }),
+
+/***/ "./src/assets/images/logo.svg":
+/*!************************************!*\
+  !*** ./src/assets/images/logo.svg ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"2229424e7cc6d52eb6fb.svg\";\n\n//# sourceURL=webpack://javascript-template/./src/assets/images/logo.svg?");
 
 /***/ })
 
@@ -181,6 +211,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -195,6 +237,29 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/nonce */

@@ -1,4 +1,7 @@
 import './style.css';
-import helloWorld from './modules/helloWorld';
+import getWeatherData from './modules/api';
+import './modules/layout';
+import loadDisplay from './modules/display';
 
-helloWorld();
+loadDisplay();
+getWeatherData('calgary');
