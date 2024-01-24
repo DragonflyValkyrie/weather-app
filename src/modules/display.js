@@ -1,18 +1,20 @@
 import getWeatherData from './api';
 
-const displayController = () => {
-    const form = document.querySelector('form');
+const displayController = (() => {
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form');
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
 
-        const searchQueryInput = document.getElementById('search-bar');
-        const searchQuery = searchQueryInput.value;
+            const searchQueryInput = document.getElementById('search-bar');
+            const searchQuery = searchQueryInput.value;
 
-        getWeatherData(searchQuery);
+            getWeatherData(searchQuery);
 
-        console.log('Form submitted with value:', searchQuery);
-        searchQueryInput.value = '';
+            console.log('Form submitted with value:', searchQuery);
+            searchQueryInput.value = '';
+        });
     });
 
     // Create the weather cards
@@ -29,12 +31,14 @@ const displayController = () => {
         // Clear existing weather cards and their children
         const existingWeatherCards = document.querySelector('.weather-cards');
         if (existingWeatherCards) {
-            existingWeatherCards.remove();
+            // Clear the content of the current and forecast weather cards
+            currentWeatherCard.innerHTML = '';
+            forecastWeatherCards.innerHTML = '';
+        } else {
+            // Append the new weather cards to the displayDiv if not present
+            const displayDiv = document.querySelector('.display');
+            displayDiv.appendChild(weatherCards);
         }
-
-        // Append the new weather cards to the displayDiv
-        const displayDiv = document.querySelector('.display');
-        displayDiv.appendChild(weatherCards);
 
         // Append the current and forecast weather cards to weatherCards
         weatherCards.appendChild(currentWeatherCard);
@@ -83,6 +87,6 @@ const displayController = () => {
         appendHumidity,
         appendForecast,
     };
-};
+})();
 
 export default displayController;

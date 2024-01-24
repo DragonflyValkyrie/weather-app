@@ -14,37 +14,37 @@ async function getWeatherData(locationQuery) {
             console.log('Forecast Weather Data:', weatherData);
 
             // Display current weather data
-            displayController().makeWeatherCards();
-            displayController().appendLocation(
+            displayController.makeWeatherCards();
+            displayController.appendLocation(
                 weatherData.location.country,
                 weatherData.location.name
             );
-            // displayController.appendCondition(
-            //     weatherData.current.condition.icon,
-            //     weatherData.current.condition.text
-            // );
-            // displayController.appendTemperature(
-            //     weatherData.current.temp_c,
-            //     weatherData.current.temp_f
-            // );
-            // displayController.appendWindspeed(
-            //     weatherData.current.wind_mph,
-            //     weatherData.current.wind_kph
-            // );
-            // displayController.appendWinddir(weatherData.current.wind_dir);
-            // displayController.appendHumidity(weatherData.current.humidity);
+            displayController.appendCondition(
+                weatherData.current.condition.icon,
+                weatherData.current.condition.text
+            );
+            displayController.appendTemperature(
+                weatherData.current.temp_c,
+                weatherData.current.temp_f
+            );
+            displayController.appendWindspeed(
+                weatherData.current.wind_mph,
+                weatherData.current.wind_kph
+            );
+            displayController.appendWinddir(weatherData.current.wind_dir);
+            displayController.appendHumidity(weatherData.current.humidity);
 
-            // // Display forecast weather data
-            // for (let i = 0; i < 3; i += 1) {
-            //     const forecastDay = weatherData.forecast.forecastday[i];
+            // Display forecast weather data
+            for (let i = 0; i < 3; i += 1) {
+                const forecastDay = weatherData.forecast.forecastday[i];
 
-            //     displayController.appendForecast(
-            //         forecastDay.date,
-            //         forecastDay.day.condition.icon,
-            //         forecastDay.day.avgtemp_c,
-            //         forecastDay.day.avgtemp_f
-            //     );
-            // }
+                displayController.appendForecast(
+                    forecastDay.date,
+                    forecastDay.day.condition.icon,
+                    forecastDay.day.avgtemp_c,
+                    forecastDay.day.avgtemp_f
+                );
+            }
         } else {
             // Handle error response
             const errorData = await response.json();
