@@ -27,6 +27,12 @@ async function getWeatherData(locationQuery) {
                 weatherData.current.temp_c,
                 weatherData.current.temp_f
             );
+
+            displayController.appendFeelslike(
+                weatherData.current.feelslike_c,
+                weatherData.current.feelslike_f
+            );
+
             displayController.appendWindspeed(
                 weatherData.current.wind_mph,
                 weatherData.current.wind_kph
@@ -34,17 +40,11 @@ async function getWeatherData(locationQuery) {
             displayController.appendWinddir(weatherData.current.wind_dir);
             displayController.appendHumidity(weatherData.current.humidity);
 
-            // Display forecast weather data
-            for (let i = 0; i < 3; i += 1) {
-                const forecastDay = weatherData.forecast.forecastday[i];
+            const forecastDays = weatherData.forecast.forecastday;
 
-                displayController.appendForecast(
-                    forecastDay.date,
-                    forecastDay.day.condition.icon,
-                    forecastDay.day.avgtemp_c,
-                    forecastDay.day.avgtemp_f
-                );
-            }
+            forecastDays.forEach((forecastDay) => {
+                displayController.appendForecast(forecastDay);
+            });
         } else {
             // Handle error response
             const errorData = await response.json();

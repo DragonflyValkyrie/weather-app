@@ -18,8 +18,15 @@ logoImage.style.height = 'auto';
 const titleElement = document.createElement('h1');
 titleElement.textContent = 'Weather App';
 
+// Search Button
+const unitToggleButton = document.createElement('button');
+unitToggleButton.classList.add('unit-toggle');
+unitToggleButton.type = 'checkbox';
+unitToggleButton.textContent = 'Toggle Units';
+
 headerContainer.appendChild(logoImage);
 headerContainer.appendChild(titleElement);
+headerContainer.appendChild(unitToggleButton);
 
 container.appendChild(headerContainer);
 
