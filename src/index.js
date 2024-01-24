@@ -1,7 +1,7 @@
 import './style.css';
 import getWeatherData from './modules/api';
 import './modules/layout';
-import loadDisplay from './modules/display';
+import displayController from './modules/display';
 
-loadDisplay();
+displayController();
 getWeatherData('calgary');
