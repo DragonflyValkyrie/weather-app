@@ -1,3 +1,12 @@
+:root {
+    --primary-bg-color: #1338be;
+    --accent-color: #fd6a02;
+    --text-color: black;
+    --card-bg: azure;
+    --white-color: white;
+    --gray-color: grey;
+}
+
 * {
     font-family:
         system-ui,
@@ -14,8 +23,106 @@
 }
 
 body {
+    margin: 0;
+    padding: 0;
+    background: var(--primary-bg-color);
+}
+
+.header-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background: var(--accent-color);
 }
 
 h1 {
-    color: orange;
+    color: var(--white-color);
+    padding: 0 50px;
+}
+
+.logo {
+    filter: invert(1);
+}
+
+.display {
+}
+
+.search-bar {
+    height: 15px;
+    background: var(--white-color);
+    display: flex;
+    align-items: center;
+    border-radius: 40px;
+    padding: 10px 20px;
+    width: 250px;
+    margin: 50px auto;
+}
+
+.search-bar input {
+    background: transparent;
+
+    border: 0;
+    outline: none;
+    padding: 10px 5px;
+    font-size: 16px;
+}
+
+::placeholder {
+    color: var(--gray-color);
+}
+
+.search-bar button {
+    background: var(--white-color);
+    border-radius: 10px;
+    border: 0;
+    width: 60px;
+    height: 35px;
+    cursor: pointer;
+    margin-left: 25px;
+}
+
+.weather-cards {
+    display: grid;
+    margin: 50px;
+    grid-template-columns: repeat(2, minmax(350px, 1fr));
+    grid-gap: 25px;
+}
+
+.current-weather-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.condition {
+    display: flex;
+}
+
+.forecast-container {
+    display: grid;
+    grid-template-rows: repeat(3, minmax(150px, 1fr));
+    grid-gap: 25px;
+}
+
+.forecast-card {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid gray;
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.forecast-condition {
+    display: flex;
+}
+
+.footer {
+    background: var(--accent-color);
+    padding: 20px;
+    font-size: 14px;
+    color: var(--white-color);
+    font-family: var(--nav-font);
+    text-align: center;
+    margin-top: auto;
 }

@@ -18,15 +18,21 @@ logoImage.style.height = 'auto';
 const titleElement = document.createElement('h1');
 titleElement.textContent = 'Weather App';
 
-// Search Button
+// Toggle Unit Button
 const unitToggleButton = document.createElement('button');
 unitToggleButton.classList.add('unit-toggle');
-unitToggleButton.type = 'checkbox';
+
+// Create a span for the slider
+const sliderSpan = document.createElement('span');
+sliderSpan.classList.add('slider', 'round');
+
+// Append text content and slider to the button
 unitToggleButton.textContent = 'Toggle Units';
+unitToggleButton.appendChild(sliderSpan);
 
 headerContainer.appendChild(logoImage);
 headerContainer.appendChild(titleElement);
-headerContainer.appendChild(unitToggleButton);
+// headerContainer.appendChild(unitToggleButton);
 
 container.appendChild(headerContainer);
 
@@ -38,6 +44,7 @@ container.appendChild(displayContainer);
 
 // Form container
 const form = document.createElement('form');
+form.classList.add('search-bar');
 displayContainer.appendChild(form);
 
 // Input to form

@@ -147,6 +147,12 @@ const displayController = (() => {
         const conditionTextElement = document.createElement('p');
         conditionTextElement.textContent = `${forecastDay.day.condition.text}`;
 
+        const forecastCondition = document.createElement('div');
+        forecastCondition.classList.add('forecast-condition');
+
+        forecastCondition.appendChild(iconElement);
+        forecastCondition.appendChild(conditionTextElement);
+
         const temperatureElement = document.createElement('p');
         temperatureElement.classList.add('forecast-temperature');
 
@@ -166,8 +172,8 @@ const displayController = (() => {
 
         // Append the elements to the forecast card
         forecastCard.appendChild(dateElement);
-        forecastCard.appendChild(iconElement);
-        forecastCard.appendChild(conditionTextElement);
+
+        forecastCard.appendChild(forecastCondition);
         forecastCard.appendChild(temperatureElement);
         forecastCard.appendChild(humidityElement);
         forecastCard.appendChild(precipitationElement);
